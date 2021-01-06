@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: my_spring_boot_app
+  elasticsearch:
+    host: "localhost"
+    port: 9200
+    scheme: "http"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,metrics,prometheus,info"
+      base-path: "/"
+  health:
+    elasticsearch:
+      enabled: false
