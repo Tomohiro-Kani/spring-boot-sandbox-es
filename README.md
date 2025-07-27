@@ -1,11 +1,11 @@
-# docker-compose
+# docker compose
 
 #docker_es起動
 # docker-compose.ymlからDockerイメージをビルド
-$ docker-compose build
+$ docker compose build
 
 # ビルドが成功したらコンテナ起動(background起動)
-$ docker-compose up -d
+$ docker compose up -d
 
 # Elasticsearch
 http://localhost:9201/
@@ -14,7 +14,7 @@ http://localhost:9201/
 http://localhost:5601/
 
 #終了
-$ docker-compose down
+$ docker compose down
 
 
 # docker
