@@ -1,0 +1,18 @@
+# Elasticsearch 8.9.2 configuration
+cluster.name: docker-cluster
+network.host: 0.0.0.0
+
+# Disable security for development environment
+xpack.security.enabled: false
+xpack.security.enrollment.enabled: false
+
+# Discovery settings for single-node
+discovery.type: single-node
+
+# Japanese analyzer settings
+analysis:
+  tokenizer:
+    kuromoji_user_dict:
+      type: kuromoji_tokenizer
+      mode: search
+      user_dictionary: userdict_ja.txt
