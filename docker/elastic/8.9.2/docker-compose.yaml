@@ -1,0 +1,43 @@
+services:
+  elasticsearch:
+    build: .
+    environment:
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      # Elasticsearch 8.x requires security to be explicitly disabled for development
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9202:9200
+    volumes:
+      - data01:/usr/share/elasticsearch/logs
+      - data01:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.9.2
+    environment:
+      # Kibana 8.x configuration for connecting to Elasticsearch
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      # Disable security features for development
+      - xpack.security.enabled=false
+    ports:
+      - 5602:5601
+    depends_on:
+      - elasticsearch
+  filebeat:
+    build:
+      context: .
+      dockerfile: ./filebeat/Dockerfile
+    volumes:
+      - data01:/usr/share/elasticsearch/logs
+    depends_on:
+      - elasticsearch
+
+volumes:
+  data01:
+    driver: "local"
